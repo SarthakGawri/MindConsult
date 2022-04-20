@@ -1,0 +1,53 @@
+{% extends "users/layout.html" %}
+
+{% block title %}
+  User registration
+{% endblock %}
+
+{% block body %}
+  <div class="row">
+    {% if userform %}
+      <div class="col-md-12"><h2>Patient registration</h2></div>
+    {% else %}
+      <div class="col-md-12"><h2>Consultant registration</h2></div>
+    {% endif %}
+
+    {% if message %}
+      <div class="desc alert alert-danger alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endif %}
+  </div>
+  {% if userform %}
+    <form action="{% url 'register' %}" method="post" class="row g-3">
+      {% csrf_token %} 
+      {% for field in userform %}
+        <div class="col-md-6">
+          <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}:</label>
+          {{ field }}
+        </div>
+      {% endfor %}
+      <div class="form-group">
+        <input class="btn btn-primary" type="submit" value="Register">
+      </div>
+    </form>
+  {% else %}
+    <form action="{% url 'register_cons' %}" method="post" class="row g-3">
+      {% csrf_token %} 
+      {% for field in consultantform %}
+        <div class="col-md-6">
+          <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}:</label>
+          {{ field }}
+        </div>
+      {% endfor %}
+      <div class="form-group">
+        <input class="btn btn-primary" type="submit" value="Register">
+      </div>
+    </form>
+  {% endif %}
+
+  <div class="form-group">
+    Already have an account? <a href="{% url 'login' %}">Log In here.</a>
+  </div>
+{% endblock %}

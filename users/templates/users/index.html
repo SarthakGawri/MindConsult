@@ -1,0 +1,16 @@
+{% extends "users/layout.html" %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block body %}
+    {% if user.is_staff %}
+        Not logged in
+    {% elif user.is_authenticated %}
+        <h1>Dashboard</h1>
+        <p>Logged in as {{ user.username }}</p>
+    {% else %}
+        Not logged in
+    {% endif %}
+{% endblock %}

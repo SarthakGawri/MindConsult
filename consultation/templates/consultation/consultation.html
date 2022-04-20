@@ -1,0 +1,72 @@
+{% extends "users/layout.html" %}
+
+{% load static %}
+
+{% block title %}
+  Consultation with {{ consultant_name }}
+{% endblock %}
+
+{% block nav %}
+{% endblock %}
+
+{% block body %}
+  {% if consultation.is_active and messages.count >= 10 %}
+    <div class="form-group d-grid gap-2 col-6">
+      
+      <a class="btn btn-outline-primary" role="button"
+        href="{% url 'consultation:consultations' %}">
+        <i class="bi bi-arrow-left-circle-fill"></i> Back to my consultations
+      </a>
+    </div>
+    <div class="form-group d-grid gap-2 col-6">
+      <form action="{% url 'consultation:consultation' consultant_name %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-danger">
+          <i class="bi bi-x-lg"></i>Close consultation
+        </button>
+      </form>
+    </div>
+  {% else %}
+    <div class="form-group">
+      <a class="btn btn-outline-primary" role="button"
+        href="{% url 'consultation:consultations' %}">
+        <i class="bi bi-arrow-left-circle"></i> Back to my consultations
+      </a>
+    </div>
+  {% endif %}
+
+  <div class="container">
+    <div class="row" id="chat-log">
+      {% for message in messages %}
+          {% if message.user.id == request.user.id %}
+            <div class="message sender col-4 text-center">
+              {{ message.content }}
+            </div>
+          {% else %}
+            <div class="message receiver col-4 text-center">
+              {{ message.content }}
+            </div>
+          {% endif %} 
+      {% empty %}
+        <h3 class="emptyText" id="emptyText">No Messages yet!</h3>
+      {% endfor %}
+    </div>
+  </div>
+  {% if consultation.is_active %}
+    <div class="form-group chat">
+      <input id="chat-message-input" placeholder="Type message..."
+        type="text" class="form-control">
+      <input class="btn btn-primary" id="chat-message-submit" type="button"
+        value="Send">
+    </div>
+  {% else %}
+    <div class="form-group alert alert-info" role="alert">
+      The consutation with {{ consultant_name }} has ended.
+    </div>
+  {% endif %}
+  {{ consultant_name|json_script:"name" }}
+
+  {{ user.user_name|json_script:"user_name" }}
+  {{ user.id|json_script:"user_id" }}
+  <script src="{% static 'consultation/consultation.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "users/layout.html" %}
+
+{% block title %}
+  View consultations
+{% endblock %}
+
+{% block body %}
+  <h1>My Consultations</h1>
+  {% if message %}
+    <div>{{ message }}</div>
+  {% endif %}
+
+  <h2>Active</h2>
+  {% for consultation in active_consultations %}
+    <a href="{% url 'consultation:consultation' consultation.consultant.username %}">
+      <div class="cons">
+        <span class="cons-elem">Patient: {{ consultation.patient.first_name|capfirst }}</span>
+        <span class="cons-elem">Consultant: {{ consultation.consultant.first_name|capfirst }}</span>
+        <span class="cons-elem">Started on: {{ consultation.start_date }}</span>
+      </div>
+    </a>
+  {% empty %}
+    <div>No active consultations</div>
+  {% endfor %}
+
+  <h2>Closed</h2>
+  {% for consultation in closed_consultations %}
+    <a href="{% url 'consultation:consultation' consultation.consultant.username %}">
+      <div class="cons">
+        <span class="cons-elem">Patient: {{ consultation.patient.first_name|capfirst }}</span>
+        <span class="cons-elem">Consultant: {{ consultation.consultant.first_name|capfirst }}</span>
+        <span class="cons-elem">Started on: {{ consultation.start_date }}</span>
+        <span class="cons-elem">Ended on: {{ consultation.end_date }}</span>
+      </div>
+    </a>
+  {% empty %}
+    <div>No closed consultations</div>
+  {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "users/layout.html" %}
+
+{% block title %}
+  Login
+{% endblock %}
+
+{% block body %}
+
+    <h2>Login</h2>
+
+    {% if message %}
+        <div class="desc alert alert-danger alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+
+    <form class="formclass" action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input autofocus class="form-control" type="text" name="username" placeholder="Username">
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="password" name="password" placeholder="Password">
+        </div>
+        <input class="btn btn-primary" type="submit" value="Login">
+    </form>
+
+    <div class="dropdown">
+      Don't have an account?
+      <a class="dropdown" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+        Register here.
+      </a>
+    
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <li>
+          <a class="dropdown-item" href="{% url 'register' %}">
+            As a Patient
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="{% url 'register_cons' %}">
+            As a Consultant
+          </a>
+        </li>
+      </ul>
+    </div>
+
+{% endblock %}

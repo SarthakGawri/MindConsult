@@ -1,0 +1,45 @@
+{% extends "users/layout.html" %}
+
+{% block title %}
+  Start new consultation
+{% endblock %}
+
+{% block body %}
+  <h1>Start consultation</h1>
+
+  <div id="error" style="display: none;" class="desc alert alert-danger alert-dismissible fade show" role="alert">
+    Please select a consultant
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  Choose consultant to start consultation
+  <div class="form-group">
+    <select id="name-input" class="form-select" aria-label="Default select example">
+      <option value="" selected>Select consultant</option>
+      {% for consultant in consultants %}
+        <option value="{{ consultant.username }}">
+          {{ consultant.first_name|capfirst }} {{ consultant.last_name|capfirst }}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+  
+  <div class="form-group">
+    <input class="btn btn-primary" id="name-submit" type="button" value="Start Consultation">
+  </div>
+
+  <script>
+      document.querySelector('#name-input').focus();
+
+      document.querySelector('#name-submit').onclick = function(e) {
+          var name = document.querySelector('#name-input').value;
+          console.log(name);
+          if (name === "") {
+            document.getElementById('error').style.display = 'block';
+          } else {
+            window.location.pathname = '/consultation/new/' + name + '/';
+          }
+          console.log(window.location.pathname)
+      };
+  </script>
+{% endblock %}
