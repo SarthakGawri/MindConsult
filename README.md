@@ -1,6 +1,8 @@
 # MindConsult
 Final Project For [CS50's Web Programming with Python 🐍 and JavaScript](https://cs50.harvard.edu/web).
 
+[Demo video](https://youtu.be/Y3lMblVx9Jc)
+
 Big Thanks and A round of applause 👏 to all the course staff and grading team. Thanks to the Discord community as well.
 
 ## About Mindconsult
